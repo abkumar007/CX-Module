@@ -1,0 +1,1 @@
+# CX-Module basic skeleton

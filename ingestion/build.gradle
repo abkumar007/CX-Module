@@ -1,0 +1,28 @@
+apply plugin: 'groovy'
+apply plugin: 'war'
+apply plugin: 'eclipse'
+apply plugin: 'eclipse-wtp'
+
+dependencies {
+
+compile('com.mashape.unirest:unirest-java:1.4.6')
+
+compile('org.apache.kafka:kafka_2.11:0.8.2.1')
+
+compile('org.springframework:spring-context:3.1.4.RELEASE')
+
+compile('org.springframework:spring-web:3.1.4.RELEASE')
+
+compile('com.sun.jersey.contribs:jersey-spring:1.19')
+{
+transitive=false
+}
+
+compile('com.sun.jersey:jersey-server:1.19')
+{
+transitive=false
+}
+compile('com.sun.jersey:jersey-core:1.19')
+
+compile('com.sun.jersey:jersey-servlet:1.19')
+}
