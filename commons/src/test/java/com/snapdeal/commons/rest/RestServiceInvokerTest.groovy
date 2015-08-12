@@ -1,5 +1,7 @@
 package com.snapdeal.commons.rest
 
+import org.json.simple.parser.ParseException;
+
 import spock.lang.Specification
 
 class RestServiceInvokerTest extends Specification {
@@ -117,6 +119,64 @@ class RestServiceInvokerTest extends Specification {
 		then:
 		noExceptionThrown()
 	}
+	
+	def 'Post + valid URL'(){
+		
+		setup:
+		RestServiceInvoker invoker=new RestServiceInvoker()
+		String json='{"title": "foo","body": "bar","userId": 1}'
+		String url='http://jsonplaceholder.typicode.com/posts'
+		
+		when:
+		String responseJSON=invoker.postJSON(url, json)
+		println 'Post Response::'+responseJSON
+		then:
+		noExceptionThrown()
+	}
+	
+	def 'Post + invalid URL'(){
+		
+		setup:
+		RestServiceInvoker invoker=new RestServiceInvoker()
+		String json='{"title": "foo","body": "bar","userId": 1}'
+		String url='invalid url'
+		
+		when:
+		String responseJSON=invoker.postJSON(url, json)
+		println 'Post Response::'+responseJSON
+		then:
+		thrown(URISyntaxException)
+	}
+	
+	def 'Post + invalid endpoint'(){
+		
+		setup:
+		RestServiceInvoker invoker=new RestServiceInvoker()
+		String json='{"title": "foo","body": "bar","userId": 1}'
+		String url='http://snapdeal.typicode.com/'
+		
+		when:
+		String responseJSON=invoker.postJSON(url, json)
+		println 'Post Response::'+responseJSON
+		then:
+		noExceptionThrown()
+	}
+	
+	
+	def 'Post + invalid JSON'(){
+		
+		setup:
+		RestServiceInvoker invoker=new RestServiceInvoker()
+		String json='Invalid JSON'
+		String url='http://snapdeal.typicode.com/'
+		
+		when:
+		String responseJSON=invoker.postJSON(url, json)
+		println 'Post Response::'+responseJSON
+		then:
+		thrown(ParseException)
+	}
+	
 	
 	
 }
