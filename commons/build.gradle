@@ -1,5 +1,14 @@
+import java.lang.invoke.LambdaForm.Compiled;
+
+apply plugin :'eclipse'
+apply plugin: 'maven'
+apply plugin: 'groovy'
 dependencies {
 
+	compile('com.mashape.unirest:unirest-java:1.4.6')
+	compile('commons-validator:commons-validator:1.4.0')
+	compile('com.googlecode.json-simple:json-simple:1.1.1')
+	testCompile('org.spockframework:spock-core:1.0-groovy-2.3')
 }
 
 
