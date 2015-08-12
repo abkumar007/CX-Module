@@ -357,5 +357,44 @@ class RestServiceInvokerTest extends Specification {
 		thrown(ParseException)
 	}
 	
+	//Testing delete
+	
+	def 'Delete + Invalid URL'()
+	{
+		setup:
+		RestServiceInvoker invoker=new RestServiceInvoker()
+		
+		when:
+		String response=invoker.delete("Invalid URL",new HashMap<String, String>())
+		
+		then:
+		thrown(URISyntaxException)
+	}
+	
+	
+	def 'Delete + valid URL'()
+	{
+		setup:
+		RestServiceInvoker invoker=new RestServiceInvoker()
+		
+		when:
+		String response=invoker.delete("http://jsonplaceholder.typicode.com/posts/1",new HashMap<String, String>())
+		println 'Delete Response::'+response
+		then:
+		noExceptionThrown()
+	}
+	
+	
+	def 'Delete + invalid URL'()
+	{
+		setup:
+		RestServiceInvoker invoker=new RestServiceInvoker()
+		
+		when:
+		String response=invoker.delete("http://snapdeal.com",new HashMap<String, String>())
+		println 'Delete Response::'+response
+		then:
+		noExceptionThrown()
+	}
 	
 }

@@ -177,4 +177,26 @@ public class RestServiceInvoker {
 
 	}
 
+	@SuppressWarnings("unchecked")
+	public String delete(String url,Map<String, String> headers) throws URISyntaxException
+	{
+		HttpResponse<String> httpResponse = null;
+
+		if (!validatorUtil.isHttpURLValid(url)) {
+			throw new URISyntaxException(url, "The URL is not absolute");
+		}
+		
+		try {
+			httpResponse = Unirest.delete(url).headers(headers).asString();
+		} catch (UnirestException e) {
+
+			LOGGER.error("Exception occured while making post call");
+			JSONObject errorObject = new JSONObject();
+			errorObject.put("status", "500");
+			errorObject.put("message", e.getLocalizedMessage());
+			return errorObject.toJSONString();
+		}
+		
+		return httpResponse.getStatusText();
+	}
 }
