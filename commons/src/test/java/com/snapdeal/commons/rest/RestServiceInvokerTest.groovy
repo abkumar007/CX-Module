@@ -238,6 +238,124 @@ class RestServiceInvokerTest extends Specification {
 		thrown(ParseException)
 	}
 	
+	//Put tests
+	
+	
+	def 'Put + valid URL'(){
+		
+		setup:
+		RestServiceInvoker invoker=new RestServiceInvoker()
+		String json='{"title": "foo","body": "bar","userId": 1}'
+		String url='http://jsonplaceholder.typicode.com/posts'
+		
+		when:
+		String responseJSON=invoker.putJSON(url, json)
+		println 'Put Response::'+responseJSON
+		then:
+		noExceptionThrown()
+	}
+	
+	def 'Put + invalid URL'(){
+		
+		setup:
+		RestServiceInvoker invoker=new RestServiceInvoker()
+		String json='{"title": "foo","body": "bar","userId": 1}'
+		String url='invalid url'
+		
+		when:
+		String responseJSON=invoker.putJSON(url, json)
+		println 'Put Response::'+responseJSON
+		then:
+		thrown(URISyntaxException)
+	}
+	
+	def 'Put + invalid endpoint'(){
+		
+		setup:
+		RestServiceInvoker invoker=new RestServiceInvoker()
+		String json='{"title": "foo","body": "bar","userId": 1}'
+		String url='http://snapdeal.typicode.com/'
+		
+		when:
+		String responseJSON=invoker.putJSON(url, json)
+		println 'Put Response::'+responseJSON
+		then:
+		noExceptionThrown()
+	}
+	
+	
+	def 'Put + invalid JSON'(){
+		
+		setup:
+		RestServiceInvoker invoker=new RestServiceInvoker()
+		String json='Invalid JSON'
+		String url='http://snapdeal.typicode.com/'
+		
+		when:
+		String responseJSON=invoker.putJSON(url, json)
+		println 'Put Response::'+responseJSON
+		then:
+		thrown(ParseException)
+	}
+	
+	//Post with headers
+	
+	def 'Put + valid URL+header'(){
+		
+		setup:
+		RestServiceInvoker invoker=new RestServiceInvoker()
+		String json='{"title": "foo","body": "bar","userId": 1}'
+		String url='http://jsonplaceholder.typicode.com/posts'
+		
+		when:
+		String responseJSON=invoker.putJSON(url, json,new HashMap<String, String>())
+		println 'Put Response::'+responseJSON
+		then:
+		noExceptionThrown()
+	}
+	
+	def 'Put + invalid URL+header'(){
+		
+		setup:
+		RestServiceInvoker invoker=new RestServiceInvoker()
+		String json='{"title": "foo","body": "bar","userId": 1}'
+		String url='invalid url'
+		
+		when:
+		String responseJSON=invoker.putJSON(url, json,new HashMap<String, String>())
+		println 'Put Response::'+responseJSON
+		then:
+		thrown(URISyntaxException)
+	}
+	
+	def 'Put + invalid endpoint+header'(){
+		
+		setup:
+		RestServiceInvoker invoker=new RestServiceInvoker()
+		String json='{"title": "foo","body": "bar","userId": 1}'
+		String url='http://snapdeal.typicode.com/'
+		
+		when:
+		String responseJSON=invoker.putJSON(url, json,new HashMap<String, String>())
+		println 'Put Response::'+responseJSON
+		then:
+		noExceptionThrown()
+	}
+	
+	
+	def 'Put + invalid JSON + header'(){
+		
+		setup:
+		RestServiceInvoker invoker=new RestServiceInvoker()
+		String json='Invalid JSON'
+		String url='http://snapdeal.typicode.com/'
+		
+		when:
+		String responseJSON=invoker.putJSON(url, json,new HashMap<String, String>())
+		println 'Put Response::'+responseJSON
+		then:
+		thrown(ParseException)
+	}
 	
 	
 }
