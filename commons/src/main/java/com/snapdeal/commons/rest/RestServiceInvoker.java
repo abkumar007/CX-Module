@@ -88,5 +88,34 @@ public class RestServiceInvoker {
 		return httpResponse.getBody().toString();
 
 	}
+	
+	
+	@SuppressWarnings("unchecked")
+	public String postJSON(String url, String jsonData,Map<String, String> headers)
+			throws URISyntaxException, ParseException {
+		HttpResponse<JsonNode> httpResponse = null;
+
+		if (!validatorUtil.isHttpURLValid(url)) {
+			throw new URISyntaxException(url, "The URL is not absolute");
+		}
+		
+		if(!validatorUtil.isJSONValid(jsonData))
+		{
+			throw new ParseException(ParseException.ERROR_UNEXPECTED_TOKEN);
+		}
+
+		try {
+			httpResponse = Unirest.post(url).headers(headers).body(jsonData).asJson();
+		} catch (UnirestException e) {
+
+			LOGGER.error("Exception occured while making post call");
+			JSONObject errorObject = new JSONObject();
+			errorObject.put("status", "500");
+			errorObject.put("message", e.getLocalizedMessage());
+			return errorObject.toJSONString();
+		}
+		return httpResponse.getBody().toString();
+
+	}
 
 }
